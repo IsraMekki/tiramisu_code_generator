@@ -187,7 +187,7 @@ void schedule::write(string *code_buffer) {
             if (comps.size() > 1) {
                 *code_buffer += comps[0]->name;
                 for (int i = 1; i < comps.size(); ++i) {
-                    *code_buffer += ".then(" + comps[i]->name + ", computation::root)";
+                    *code_buffer += ".then(" + comps[i]->name + ", computation::rootroot)";
                 }
                 *code_buffer += ";";
             }
@@ -853,7 +853,7 @@ vector<schedule *> state::apply(computation *comp) {
                 vect_vars.push_back(this->schedules[i].in_variables[0]);
                 vect_vars.push_back(v1);
                 vect_vars.push_back(v2);
-                scheds.push_back(new schedule({comp}, VECTORIZE, {VECTOR_SIZE}, vect_vars));
+               // scheds.push_back(new schedule({comp}, VECTORIZE, {VECTOR_SIZE}, vect_vars));
                 scheds.push_back(new schedule({comp}, this->schedules[i].schedule, this->schedules[i].factors, {v1}));
             }
             else {
@@ -865,10 +865,10 @@ vector<schedule *> state::apply(computation *comp) {
             vect_vars.push_back(this->schedules[i - 1].out_variables.back());
             vect_vars.push_back(v1);
             vect_vars.push_back(v2);
-            scheds.push_back(new schedule({comp}, VECTORIZE, {VECTOR_SIZE}, vect_vars));
+          //  scheds.push_back(new schedule({comp}, VECTORIZE, {VECTOR_SIZE}, vect_vars));
         }
         if (comp->type == STENCIL){
-            comp->variables.back()->inf_value = VECTOR_SIZE;
+         //   comp->variables.back()->inf_value = VECTOR_SIZE;
         }
     }
     scheds.push_back(new schedule({comp}, PARALLELIZE, {}, {this->schedules.back().out_variables[0]}));
