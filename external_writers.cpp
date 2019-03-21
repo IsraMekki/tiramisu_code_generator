@@ -230,10 +230,11 @@ void generate_json_one_node(node_class *represented_node, int code_id){
 }
 
 //=====================================================================wrapper==========================================================================================================
-void generate_h_wrapper(string function_name, vector<buffer *> buffers, int code_id) {
+void generate_h_wrapper(string function_name, vector<buffer *> buffers, int code_id, int schedule_n) {
     ofstream output;
 
-    output.open("samples/function" + to_string(code_id) + "/" + function_name + "/" + function_name + "_wrapper.h");
+    string fpath = "samples/function" + to_string(code_id) + "/" + "function" + to_string(code_id) + "_schedule_" + to_string(schedule_n) + "/" + function_name;
+    output.open(fpath + "/" + function_name + "_wrapper.h");
     string code_buffer = "#ifndef HALIDE__generated_" + function_name + "_h\n"
                                                                         "#define HALIDE__generated_" + function_name +
                          "_h\n"
@@ -334,9 +335,10 @@ void generate_h_wrapper(string function_name, vector<buffer *> buffers, int code
 
 
 
-void generate_cpp_wrapper(string function_name, vector<buffer *> buffers, string *default_type_wrapper, int code_id) {
+void generate_cpp_wrapper(string function_name, vector<buffer *> buffers, string *default_type_wrapper, int code_id, int schedule_n) {
     ofstream output;
-    output.open("samples/function" + to_string(code_id) + "/" + function_name + "/" + function_name + "_wrapper.cpp");
+    string fpath = "samples/function" + to_string(code_id) + "/" + "function" + to_string(code_id) + "_schedule_" + to_string(schedule_n) + "/" + function_name;
+    output.open(fpath + "/" + function_name + "_wrapper.cpp");
     string code_buffer = "#include \"Halide.h\"\n"
                          "#include \"" + function_name + "_wrapper.h\"\n"
                                                          "#include \"tiramisu/utils.h\"\n"
@@ -482,7 +484,7 @@ string random_array_initialization(buffer *buffer, int *indentation_level, strin
 }
 
 
-void generate_json_schedules(schedules_class *schedules, int code_id, string function_name) {
+void generate_json_schedules(schedules_class *schedules, int code_id, int schedule_n, string function_name) {
     int indentattion_level = 0;
     string json = "{";
     new_line(1, ++indentattion_level, &json);
@@ -528,8 +530,9 @@ void generate_json_schedules(schedules_class *schedules, int code_id, string fun
 
 
     ofstream output_file;
+    string fpath = "samples/function" + to_string(code_id) + "/" + "function" + to_string(code_id) + "_schedule_" + to_string(schedule_n) + "/" + function_name;
 
-    output_file.open("samples/function" + to_string(code_id) + "/" + function_name + "/" + function_name + ".json");
+    output_file.open(fpath + "/" + function_name + ".json");
     output_file << json;
     output_file.close();
 

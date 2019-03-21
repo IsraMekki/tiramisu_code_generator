@@ -352,7 +352,7 @@ input::input(string name, vector<variable *> *variables, string data_type, int i
 
 //=====================================================================tiramisu_code class==========================================================================================================
 
-tiramisu_code::tiramisu_code(int code_id, string function_name, vector<computation *> *computations,
+tiramisu_code::tiramisu_code(int code_id, string function_name, int schedule_n, vector<computation *> *computations,
                              vector<variable *> *variables, vector<constant *> *constants, vector<input *> *inputs,
                              vector<buffer *> *buffers, string *default_type, vector<schedule *> *schedules) {
 
@@ -375,11 +375,9 @@ tiramisu_code::tiramisu_code(int code_id, string function_name, vector<computati
     this->indentation_level = 1;
     this->id = code_id;
 
-    string fpath = "samples/function" + to_string(code_id);
+    string fpath = "samples/function" + to_string(code_id) + "/" + "function" + to_string(code_id) + "_schedule_" + to_string(schedule_n) + "/" + function_name;
     mkdir(fpath.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-    fpath = "samples/function" + to_string(code_id) + "/" + function_name;
-    mkdir(fpath.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-    this->output_file.open("samples/function" + to_string(code_id) + "/" + function_name + "/" + function_name + ".cpp");
+    this->output_file.open(fpath + "/" + function_name + ".cpp");
 
     write_constants();
     write_variables();
@@ -896,6 +894,13 @@ bool contains(vector<variable *> v, variable *e) {
 int find_schedule(vector<configuration> schedules, int schedule){
     for (int i = 0; i < schedules.size(); ++i) {
         if (schedules[i].schedule == schedule) return i;
+    }
+    return -1;
+}
+
+int find_schedule(vector<schedule*> schedules, int schedule){
+    for (int i = 0; i < schedules.size(); ++i) {
+        if (schedules[i]->type == schedule) return i;
     }
     return -1;
 }

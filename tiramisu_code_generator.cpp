@@ -25,8 +25,8 @@ void generate_tiramisu_code_conv(int code_id, int nb_layers, double *padding_pro
     vector<int> padding_types = generate_padding_types(nb_layers, padding_probs);
     tiramisu_code *code = new tiramisu_code("function" + to_string(code_id), &padding_types, default_type_tiramisu);
 
-    generate_cpp_wrapper(code->function_name, code->buffers, default_type_wrapper, code_id);
-    generate_h_wrapper(code->function_name, code->buffers, code_id);
+    generate_cpp_wrapper(code->function_name, code->buffers, default_type_wrapper, code_id, 0);
+    generate_h_wrapper(code->function_name, code->buffers, code_id, 0);
 }
 
 
@@ -247,6 +247,8 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
 
 
     tiramisu_code *code;
+    int cpt_schedule = -1, cpt_unrolling = -1;
+    string fpath;
 
     for (int i = 0; i < variables_exhaustive.size(); ++i) {
         all_schedule_variables = all_vars;
@@ -258,15 +260,28 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
        // all_schedule_variables.push_back(new variable("i_vec", 21));
        // all_schedule_variables.push_back(new variable("i_vec1", 22));
         //schedules_exhaustive[i].push_back(new schedule({computations[0], computations[1]}, AFTER, {0}, {}));
+
+        fpath = "samples/function" + to_string(code_id);
+        mkdir(fpath.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
+        if (find_schedule(schedules_exhaustive[i], UNROLL) == -1){
+            cpt_schedule++;
+            fpath = "samples/function" + to_string(code_id) + "/function" + to_string(code_id) + "_schedule_" + to_string(cpt_schedule);
+            mkdir(fpath.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+            cpt_unrolling = -1;
+        }
+
+        cpt_unrolling++;
+
         code = new tiramisu_code(code_id,
-                                 function_name + "_schedule_" +
-                                 to_string(i),
+                                 function_name + "_schedule_" + to_string(cpt_schedule) + "_unroll_" +
+                                 to_string(cpt_unrolling), cpt_schedule,
                                  &computations, &all_schedule_variables,
                                  &variable_max_values, &inputs, &buffers,
                                  default_type_tiramisu, &schedules_exhaustive[i]);
-        generate_cpp_wrapper(code->function_name, buffers, default_type_wrapper, code_id);
-        generate_h_wrapper(code->function_name, buffers, code_id);
-        generate_json_schedules(schedule_classes[i], code_id, code->function_name);
+        generate_cpp_wrapper(code->function_name, buffers, default_type_wrapper, code_id, cpt_schedule);
+        generate_h_wrapper(code->function_name, buffers, code_id, cpt_schedule);
+        generate_json_schedules(schedule_classes[i], code_id, cpt_schedule, code->function_name);
     }
 
 

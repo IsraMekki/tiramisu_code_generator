@@ -182,7 +182,7 @@ public:
     vector<schedule*> schedules;
     int indentation_level, id;
     ofstream output_file;
-    tiramisu_code(int code_id, string function_name, vector<computation*> *computations, vector <variable*> *variables, vector<constant*> *constants, vector<input*> *inputs, vector<buffer*> *buffers, string *default_type, vector <schedule*> *schedules);
+    tiramisu_code(int code_id, string function_name, int schedule_n, vector<computation*> *computations, vector <variable*> *variables, vector<constant*> *constants, vector<input*> *inputs, vector<buffer*> *buffers, string *default_type, vector <schedule*> *schedules);
     tiramisu_code(string function_name, vector<int> *padding_types, string *default_type);
 
     void generate_code();
@@ -354,6 +354,7 @@ bool is_valid(configuration conf);
 //---------------------------------------------------------Helper functions--------------------------------------------------------------------------
 int find(vector<int> ints, int e);
 int find_schedule(vector<configuration> schedules, int schedule);
+int find_schedule(vector<schedule*> schedules, int schedule);
 
 bool contains(vector<variable*> v, variable *e);
 map <int, vector<int>> indexes_by_size(vector<variable*> vars);
