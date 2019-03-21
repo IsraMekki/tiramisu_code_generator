@@ -255,8 +255,8 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
                 all_schedule_variables.push_back(variables_exhaustive[i][j]);
             }
         }
-        all_schedule_variables.push_back(new variable("i_vec", 21));
-        all_schedule_variables.push_back(new variable("i_vec1", 22));
+       // all_schedule_variables.push_back(new variable("i_vec", 21));
+       // all_schedule_variables.push_back(new variable("i_vec1", 22));
         //schedules_exhaustive[i].push_back(new schedule({computations[0], computations[1]}, AFTER, {0}, {}));
         code = new tiramisu_code(code_id,
                                  function_name + "_schedule_" +

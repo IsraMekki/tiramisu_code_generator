@@ -212,10 +212,17 @@ void read_inputs(int *nb_codes, int *nb_stages, string *default_type_tiramisu, s
         pos1 = line.find("\"", 0);
         pos2 = line.find("\"", pos1 + 1);
         info = line.substr(pos1 + 1, pos2 - pos1 - 1);
-        stringstream info_stream(info);
-        int number;
-        while (info_stream >> number)
-            (*unrolling_factors).push_back(number);
+        if (info.compare("all") == 0){
+            for (int i = 1; i < MAX_MEMORY_SIZE; ++i) {
+                (*unrolling_factors).push_back((int)pow(2.0, i));
+            }
+        }
+        else {
+            stringstream info_stream(info);
+            int number;
+            while (info_stream >> number)
+                (*unrolling_factors).push_back(number);
+        }
 
     }
 

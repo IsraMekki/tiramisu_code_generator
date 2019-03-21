@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/isra/Desktop/restructured/classes.cpp
+/home/isra/tiramisu_code_generator/classes.cpp
 cmath
 -
 sys/stat.h
 -
 classes.h
-/home/isra/Desktop/restructured/classes.h
+/home/isra/tiramisu_code_generator/classes.h
 external_writers.h
-/home/isra/Desktop/restructured/external_writers.h
+/home/isra/tiramisu_code_generator/external_writers.h
 
-/home/isra/Desktop/restructured/classes.h
+/home/isra/tiramisu_code_generator/classes.h
 string
 -
 vector
@@ -30,15 +30,15 @@ iostream
 fstream
 -
 
-/home/isra/Desktop/restructured/external_writers.cpp
+/home/isra/tiramisu_code_generator/external_writers.cpp
 external_writers.h
-/home/isra/Desktop/restructured/external_writers.h
+/home/isra/tiramisu_code_generator/external_writers.h
 classes.h
-/home/isra/Desktop/restructured/classes.h
+/home/isra/tiramisu_code_generator/classes.h
 tiramisu_code_generator.h
-/home/isra/Desktop/restructured/tiramisu_code_generator.h
+/home/isra/tiramisu_code_generator/tiramisu_code_generator.h
 
-/home/isra/Desktop/restructured/external_writers.h
+/home/isra/tiramisu_code_generator/external_writers.h
 string
 -
 iostream
@@ -46,9 +46,9 @@ iostream
 fstream
 -
 classes.h
-/home/isra/Desktop/restructured/classes.h
+/home/isra/tiramisu_code_generator/classes.h
 
-/home/isra/Desktop/restructured/main.cpp
+/home/isra/tiramisu_code_generator/main.cpp
 iostream
 -
 string
@@ -56,21 +56,21 @@ string
 sstream
 -
 tiramisu_code_generator.h
-/home/isra/Desktop/restructured/tiramisu_code_generator.h
+/home/isra/tiramisu_code_generator/tiramisu_code_generator.h
 random
 -
 cstdlib
 -
 
-/home/isra/Desktop/restructured/tiramisu_code_generator.cpp
+/home/isra/tiramisu_code_generator/tiramisu_code_generator.cpp
 random
 -
 algorithm
 -
 tiramisu_code_generator.h
-/home/isra/Desktop/restructured/tiramisu_code_generator.h
+/home/isra/tiramisu_code_generator/tiramisu_code_generator.h
 
-/home/isra/Desktop/restructured/tiramisu_code_generator.h
+/home/isra/tiramisu_code_generator/tiramisu_code_generator.h
 string
 -
 vector
@@ -88,7 +88,7 @@ cmath
 map
 -
 classes.h
-/home/isra/Desktop/restructured/classes.h
+/home/isra/tiramisu_code_generator/classes.h
 external_writers.h
-/home/isra/Desktop/restructured/external_writers.h
+/home/isra/tiramisu_code_generator/external_writers.h
 

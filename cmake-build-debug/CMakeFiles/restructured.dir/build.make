@@ -43,10 +43,10 @@ RM = /home/isra/clion-2018.1.5/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/isra/Desktop/restructured
+CMAKE_SOURCE_DIR = /home/isra/tiramisu_code_generator
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/isra/Desktop/restructured/cmake-build-debug
+CMAKE_BINARY_DIR = /home/isra/tiramisu_code_generator/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/restructured.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/restructured.dir/flags.make
 
 CMakeFiles/restructured.dir/main.cpp.o: CMakeFiles/restructured.dir/flags.make
 CMakeFiles/restructured.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/Desktop/restructured/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/restructured.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/main.cpp.o -c /home/isra/Desktop/restructured/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/tiramisu_code_generator/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/restructured.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/main.cpp.o -c /home/isra/tiramisu_code_generator/main.cpp
 
 CMakeFiles/restructured.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restructured.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/Desktop/restructured/main.cpp > CMakeFiles/restructured.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/tiramisu_code_generator/main.cpp > CMakeFiles/restructured.dir/main.cpp.i
 
 CMakeFiles/restructured.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restructured.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/Desktop/restructured/main.cpp -o CMakeFiles/restructured.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/tiramisu_code_generator/main.cpp -o CMakeFiles/restructured.dir/main.cpp.s
 
 CMakeFiles/restructured.dir/main.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/restructured.dir/main.cpp.o.provides.build: CMakeFiles/restructured.d
 
 CMakeFiles/restructured.dir/classes.cpp.o: CMakeFiles/restructured.dir/flags.make
 CMakeFiles/restructured.dir/classes.cpp.o: ../classes.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/Desktop/restructured/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/restructured.dir/classes.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/classes.cpp.o -c /home/isra/Desktop/restructured/classes.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/tiramisu_code_generator/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/restructured.dir/classes.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/classes.cpp.o -c /home/isra/tiramisu_code_generator/classes.cpp
 
 CMakeFiles/restructured.dir/classes.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restructured.dir/classes.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/Desktop/restructured/classes.cpp > CMakeFiles/restructured.dir/classes.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/tiramisu_code_generator/classes.cpp > CMakeFiles/restructured.dir/classes.cpp.i
 
 CMakeFiles/restructured.dir/classes.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restructured.dir/classes.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/Desktop/restructured/classes.cpp -o CMakeFiles/restructured.dir/classes.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/tiramisu_code_generator/classes.cpp -o CMakeFiles/restructured.dir/classes.cpp.s
 
 CMakeFiles/restructured.dir/classes.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/restructured.dir/classes.cpp.o.provides.build: CMakeFiles/restructure
 
 CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o: CMakeFiles/restructured.dir/flags.make
 CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o: ../tiramisu_code_generator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/Desktop/restructured/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o -c /home/isra/Desktop/restructured/tiramisu_code_generator.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/tiramisu_code_generator/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o -c /home/isra/tiramisu_code_generator/tiramisu_code_generator.cpp
 
 CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/Desktop/restructured/tiramisu_code_generator.cpp > CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/tiramisu_code_generator/tiramisu_code_generator.cpp > CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.i
 
 CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/Desktop/restructured/tiramisu_code_generator.cpp -o CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/tiramisu_code_generator/tiramisu_code_generator.cpp -o CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.s
 
 CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o.requires:
 
@@ -131,16 +131,16 @@ CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o.provides.build: CMakeF
 
 CMakeFiles/restructured.dir/external_writers.cpp.o: CMakeFiles/restructured.dir/flags.make
 CMakeFiles/restructured.dir/external_writers.cpp.o: ../external_writers.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/Desktop/restructured/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/restructured.dir/external_writers.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/external_writers.cpp.o -c /home/isra/Desktop/restructured/external_writers.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/isra/tiramisu_code_generator/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/restructured.dir/external_writers.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/restructured.dir/external_writers.cpp.o -c /home/isra/tiramisu_code_generator/external_writers.cpp
 
 CMakeFiles/restructured.dir/external_writers.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/restructured.dir/external_writers.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/Desktop/restructured/external_writers.cpp > CMakeFiles/restructured.dir/external_writers.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/isra/tiramisu_code_generator/external_writers.cpp > CMakeFiles/restructured.dir/external_writers.cpp.i
 
 CMakeFiles/restructured.dir/external_writers.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/restructured.dir/external_writers.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/Desktop/restructured/external_writers.cpp -o CMakeFiles/restructured.dir/external_writers.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/isra/tiramisu_code_generator/external_writers.cpp -o CMakeFiles/restructured.dir/external_writers.cpp.s
 
 CMakeFiles/restructured.dir/external_writers.cpp.o.requires:
 
@@ -169,7 +169,7 @@ restructured: CMakeFiles/restructured.dir/tiramisu_code_generator.cpp.o
 restructured: CMakeFiles/restructured.dir/external_writers.cpp.o
 restructured: CMakeFiles/restructured.dir/build.make
 restructured: CMakeFiles/restructured.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/isra/Desktop/restructured/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable restructured"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/isra/tiramisu_code_generator/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable restructured"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/restructured.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -189,6 +189,6 @@ CMakeFiles/restructured.dir/clean:
 .PHONY : CMakeFiles/restructured.dir/clean
 
 CMakeFiles/restructured.dir/depend:
-	cd /home/isra/Desktop/restructured/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/isra/Desktop/restructured /home/isra/Desktop/restructured /home/isra/Desktop/restructured/cmake-build-debug /home/isra/Desktop/restructured/cmake-build-debug /home/isra/Desktop/restructured/cmake-build-debug/CMakeFiles/restructured.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/isra/tiramisu_code_generator/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/isra/tiramisu_code_generator /home/isra/tiramisu_code_generator /home/isra/tiramisu_code_generator/cmake-build-debug /home/isra/tiramisu_code_generator/cmake-build-debug /home/isra/tiramisu_code_generator/cmake-build-debug/CMakeFiles/restructured.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/restructured.dir/depend
 

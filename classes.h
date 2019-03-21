@@ -353,8 +353,7 @@ bool is_valid(configuration conf);
 
 //---------------------------------------------------------Helper functions--------------------------------------------------------------------------
 int find(vector<int> ints, int e);
-int find_var(vector<variable*> vars, int var_id);
-int find_list(vector<vector<int>> ints, int e);
+int find_schedule(vector<configuration> schedules, int schedule);
 
 bool contains(vector<variable*> v, variable *e);
 map <int, vector<int>> indexes_by_size(vector<variable*> vars);

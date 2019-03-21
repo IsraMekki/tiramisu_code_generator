@@ -824,6 +824,9 @@ bool is_valid(configuration conf) {
             if (conf.factors[i] > conf.in_variables[i]->sup_value->value) return false;
         }
     }
+    if ((conf.schedule == UNROLL) && (conf.in_variables.back()->inf_value != INF)){
+        if (conf.factors[0] > conf.in_variables.back()->sup_value->value) return false;
+    }
     return true;
 }
 
@@ -833,6 +836,11 @@ bool state::is_extendable(int nb_schedules) {
 
 
 bool state::is_appliable(int nb_schedules) {
+    int tiling  = find_schedule(this->schedules, TILE_2), unrolling  = find_schedule(this->schedules, UNROLL);
+    if (tiling == -1) tiling = find_schedule(this->schedules, TILE_3);
+    if ((tiling != -1) && (unrolling != -1)){
+        return !((this->schedules[tiling].out_variables.back() == this->schedules[unrolling].in_variables[0]) && (this->schedules[unrolling].factors[0] > this->schedules[tiling].factors.back()));
+    }
     return (is_valid(schedules.back()) && (schedules.size() == nb_schedules));
 }
 
@@ -844,17 +852,17 @@ state::state(vector<configuration> schedules, int level) {
 
 vector<schedule *> state::apply(computation *comp) {
     vector <variable*> vect_vars;
-    variable *v1 = new variable("i_vec", 21), *v2 = new variable("i_vec1", 22);
+    //variable *v1 = new variable("i_vec", 21), *v2 = new variable("i_vec1", 22);
     vector<schedule *> scheds;
     for (int i = 0; i < this->schedules.size(); ++i) {
         vect_vars.clear();
         if ((this->schedules[i].schedule != NONE) && (this->schedules[i].schedule != NONE_UNROLL)) {
             if (this->schedules[i].schedule == UNROLL){
                 vect_vars.push_back(this->schedules[i].in_variables[0]);
-                vect_vars.push_back(v1);
-                vect_vars.push_back(v2);
+                //vect_vars.push_back(v1);
+               // vect_vars.push_back(v2);
                // scheds.push_back(new schedule({comp}, VECTORIZE, {VECTOR_SIZE}, vect_vars));
-                scheds.push_back(new schedule({comp}, this->schedules[i].schedule, this->schedules[i].factors, {v1}));
+                scheds.push_back(new schedule({comp}, this->schedules[i].schedule, this->schedules[i].factors, this->schedules[i].in_variables));
             }
             else {
                 scheds.push_back(new schedule({comp}, this->schedules[i].schedule, this->schedules[i].factors,
@@ -863,8 +871,8 @@ vector<schedule *> state::apply(computation *comp) {
         }
         if (this->schedules[i].schedule == NONE_UNROLL) {
             vect_vars.push_back(this->schedules[i - 1].out_variables.back());
-            vect_vars.push_back(v1);
-            vect_vars.push_back(v2);
+           // vect_vars.push_back(v1);
+           // vect_vars.push_back(v2);
           //  scheds.push_back(new schedule({comp}, VECTORIZE, {VECTOR_SIZE}, vect_vars));
         }
         if (comp->type == STENCIL){
@@ -883,6 +891,13 @@ bool contains(vector<variable *> v, variable *e) {
         if (v[i]->id == e->id) return true;
     }
     return false;
+}
+
+int find_schedule(vector<configuration> schedules, int schedule){
+    for (int i = 0; i < schedules.size(); ++i) {
+        if (schedules[i].schedule == schedule) return i;
+    }
+    return -1;
 }
 
 
