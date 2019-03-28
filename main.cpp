@@ -5,7 +5,7 @@
 #include <random>
 #include <cstdlib>
 
-#define CODES_FROM 0
+#define CODES_FROM 24800
 
 using namespace std;
 

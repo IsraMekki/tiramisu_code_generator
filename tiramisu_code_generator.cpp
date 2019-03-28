@@ -46,7 +46,7 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
     int id = 0, nb, nb_dims = (rand() % (max_nb_dims - 1)) + 2, sum = 0, const_sum = MAX_MEMORY_SIZE - nb_dims * MIN_LOOP_DIM;
     vector<int> computation_dims;
     for (int i = 0; i < nb_dims; ++i) {
-        computation_dims.push_back(rand() % MAX_CONST_VALUE);
+        computation_dims.push_back((rand() % MAX_CONST_VALUE) + 1);
         sum += computation_dims[i];
     }
 
@@ -258,12 +258,21 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
        // all_schedule_variables.push_back(new variable("i_vec", 21));
        // all_schedule_variables.push_back(new variable("i_vec1", 22));
         //schedules_exhaustive[i].push_back(new schedule({computations[0], computations[1]}, AFTER, {0}, {}));
-        code = new tiramisu_code(code_id,
-                                 function_name + "_schedule_" +
-                                 to_string(i),
-                                 &computations, &all_schedule_variables,
-                                 &variable_max_values, &inputs, &buffers,
-                                 default_type_tiramisu, &schedules_exhaustive[i]);
+        if (i != 0) {
+            code = new tiramisu_code(code_id,
+                                     function_name + "_schedule_" +
+                                     to_string(i -1),
+                                     &computations, &all_schedule_variables,
+                                     &variable_max_values, &inputs, &buffers,
+                                     default_type_tiramisu, &schedules_exhaustive[i]);
+        }
+        else{
+            code = new tiramisu_code(code_id,
+                                     function_name + "_no_schedule",
+                                     &computations, &all_schedule_variables,
+                                     &variable_max_values, &inputs, &buffers,
+                                     default_type_tiramisu, &schedules_exhaustive[i]);
+        }
         generate_cpp_wrapper(code->function_name, buffers, default_type_wrapper, code_id);
         generate_h_wrapper(code->function_name, buffers, code_id);
         generate_json_schedules(schedule_classes[i], code_id, code->function_name);
@@ -693,16 +702,16 @@ void generate_random_schedules(int nb_schedules, vector<schedule_params> schedul
 schedules_class *confs_to_sc(vector<configuration> schedules){
     tiling_class *tc;
     vector<int> interchange_dims;
-    int unrolling_factor;
-    (schedules[0].schedule == INTERCHANGE) ?
-            interchange_dims = {schedules[0].in_variables[0]->id, schedules[0].in_variables[1]->id} :
+    int unrolling_factor, pos_interchange = find_schedule(schedules, INTERCHANGE), pos_tiling_2D = find_schedule(schedules, TILE_2), pos_tiling_3D = find_schedule(schedules, TILE_3), pos_unrolling = find_schedule(schedules, UNROLL);
+    (pos_interchange != -1) ?
+            interchange_dims = {schedules[pos_interchange].in_variables[0]->id, schedules[pos_interchange].in_variables[1]->id} :
             interchange_dims = {};
-    (schedules[1].schedule == TILE_2) ?
-            tc = new tiling_class(2, {schedules[1].in_variables[0]->id, schedules[1].in_variables[1]->id}, {schedules[1].factors[0], schedules[1].factors[1]}) :
-            (schedules[1].schedule == TILE_3) ?
-                tc = new tiling_class(3, {schedules[1].in_variables[0]->id, schedules[1].in_variables[1]->id, schedules[1].in_variables[2]->id}, {schedules[1].factors[0], schedules[1].factors[1], schedules[1].factors[2]}) :
+    (pos_tiling_2D != -1) ?
+            tc = new tiling_class(2, {schedules[pos_tiling_2D].in_variables[0]->id, schedules[pos_tiling_2D].in_variables[1]->id}, {schedules[pos_tiling_2D].factors[0], schedules[pos_tiling_2D].factors[1]}) :
+            (pos_tiling_3D != -1) ?
+                tc = new tiling_class(3, {schedules[pos_tiling_3D].in_variables[0]->id, schedules[pos_tiling_3D].in_variables[1]->id, schedules[pos_tiling_3D].in_variables[2]->id}, {schedules[pos_tiling_3D].factors[0], schedules[pos_tiling_3D].factors[1], schedules[pos_tiling_3D].factors[2]}) :
                 tc = nullptr;
-    (schedules[2].schedule == UNROLL) ? unrolling_factor = schedules[2].factors[0] : unrolling_factor = (int)NULL;
+    (pos_unrolling != -1) ? unrolling_factor = schedules[pos_unrolling].factors[0] : unrolling_factor = (int)NULL;
     return new schedules_class(interchange_dims, unrolling_factor, tc);
 }
 

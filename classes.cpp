@@ -870,7 +870,10 @@ vector<schedule *> state::apply(computation *comp) {
             }
         }
         if (this->schedules[i].schedule == NONE_UNROLL) {
-            vect_vars.push_back(this->schedules[i - 1].out_variables.back());
+            if(i != 0) {
+                vect_vars.push_back(this->schedules[i - 1].out_variables.back());
+            }
+            else vect_vars.push_back(comp->variables.back());
            // vect_vars.push_back(v1);
            // vect_vars.push_back(v2);
           //  scheds.push_back(new schedule({comp}, VECTORIZE, {VECTOR_SIZE}, vect_vars));
