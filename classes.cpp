@@ -823,7 +823,7 @@ bool is_valid(configuration conf) {
         }
     }
     if ((conf.schedule == UNROLL) && (conf.in_variables.back()->inf_value != INF)){
-        if (conf.factors[0] > conf.in_variables.back()->sup_value->value) return false;
+        if (conf.factors[0] > conf.in_variables.back()->sup_value->value / 2) return false;
     }
     return true;
 }
