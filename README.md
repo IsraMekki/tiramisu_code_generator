@@ -13,12 +13,15 @@ cd cmake-build-debug
 ```
 ## Creating random samples
 ```
+cd cmake-build-debug
+
 make
 ./restructured
 ```
 # Running the programs on Lanka
 ## Compiling all programs
 ```
+#Programs to be executed are stored in /data/scratch/henni-mohammed/data/programs
 cd /data/scratch/henni-mohammed/tiramisu
 screen                                                    #it's better to use screen
 
