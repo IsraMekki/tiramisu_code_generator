@@ -5,7 +5,7 @@
 #include <random>
 #include <cstdlib>
 
-#define CODES_FROM 24800
+#define CODES_FROM 85000
 
 using namespace std;
 
@@ -24,7 +24,7 @@ int main() {
 
     int nb_codes, nb_stages, nb_inputs, offset, nb_rand_schedules, nb_dims;
     vector <int> scheduling_commands, tile_sizes, unrolling_factors;
-    double assignment_prob, assignment_input_prob, conv_prob, same_padding_prob, interchange_prob, tiling_prob, unrolling_prob;
+    double assignment_prob, assignment_input_prob, conv_prob, same_padding_prob;
     string defaut_type_tiramisu, default_type_wrapper;
     bool all_schedules;
 

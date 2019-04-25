@@ -77,4 +77,10 @@ schedules_class *confs_to_sc(vector<configuration> schedules);
 string to_base_2(int num, int nb_pos);
 
 
+//-------------------------fusions----------------------------------
+computation *smallest_comp(vector<computation*> computations);
+vector<schedule*> duplicate_schedules(vector <schedule*> generated_schedules, computation* comp0, vector<computation*> other_comps);
+vector<schedule*> generate_fusions(vector<computation*> computations, vector<variable*> new_variables);
+
+
 #endif //RESTRUCTURED_TIRAMISU_CODE_GENERATOR_H

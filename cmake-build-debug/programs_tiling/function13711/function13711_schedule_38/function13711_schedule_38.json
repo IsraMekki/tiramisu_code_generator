@@ -1,9 +1,0 @@
-{
-    "interchange_dims" : [],
-    "tiling" : {
-        "tiling_depth" : 3,
-        "tiling_dims" : [1, 2, 3],
-        "tiling_factors" : [128, 64, 32]
-    },
-    "unrolling_factor" : null
-}

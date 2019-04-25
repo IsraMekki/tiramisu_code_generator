@@ -43,10 +43,10 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
     srand(code_id);
     cout << "_________________code " + to_string(code_id) + "________________" << endl;
     offset = rand() % offset + 1;
-    int id = 0, nb, nb_dims = (rand() % (max_nb_dims - 1)) + 2, sum = 0, const_sum = MAX_MEMORY_SIZE - nb_dims * MIN_LOOP_DIM;
+    int id = code_id, nb, nb_dims = (rand() % (max_nb_dims - 1)) + 2, sum = 0, const_sum = MAX_MEMORY_SIZE - nb_dims * MIN_LOOP_DIM;
     vector<int> computation_dims;
     for (int i = 0; i < nb_dims; ++i) {
-        computation_dims.push_back((rand() % MAX_CONST_VALUE) + 1);
+        computation_dims.push_back((rand() % MAX_CONST_VALUE));
         sum += computation_dims[i];
     }
 
@@ -236,17 +236,21 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
 
     vector<variable*> all_schedule_variables;
 
+    //computation *smallest_computation = computations[0];
+    computation *smallest_computation = smallest_comp(computations);
+
     if (all_schedules) {
-        generate_all_schedules(schedules_parameters, computations[0], &schedules_exhaustive, &variables_exhaustive,
+        generate_all_schedules(schedules_parameters, smallest_computation, &schedules_exhaustive, &variables_exhaustive,
                                &schedule_classes);
     }
     else {
-        generate_random_schedules(nb_rand_schedules, schedules_parameters, computations[0], &schedules_exhaustive,
+        generate_random_schedules(nb_rand_schedules, schedules_parameters, smallest_computation, &schedules_exhaustive,
                                   &variables_exhaustive, &schedule_classes);
     }
 
 
     tiramisu_code *code;
+    int schedule_n = 0;
 
     for (int i = 0; i < variables_exhaustive.size(); ++i) {
         all_schedule_variables = all_vars;
@@ -258,24 +262,49 @@ void generate_tiramisu_code_multiple_computations(int code_id, int nb_stages, do
        // all_schedule_variables.push_back(new variable("i_vec", 21));
        // all_schedule_variables.push_back(new variable("i_vec1", 22));
         //schedules_exhaustive[i].push_back(new schedule({computations[0], computations[1]}, AFTER, {0}, {}));
+
+
+
+        //Fusions
+        vector <schedule*> duplicated, fusions;
+        duplicated = duplicate_schedules(schedules_exhaustive[i], smallest_computation, computations);
+        for (int k = 0; k < duplicated.size(); ++k) {
+            schedules_exhaustive[i].push_back(duplicated[k]);
+        }
+
         if (i != 0) {
-            code = new tiramisu_code(code_id,
-                                     function_name + "_schedule_" +
-                                     to_string(i -1),
-                                     &computations, &all_schedule_variables,
-                                     &variable_max_values, &inputs, &buffers,
-                                     default_type_tiramisu, &schedules_exhaustive[i]);
+            fusions = generate_fusions(computations, variables_exhaustive[i]);
         }
-        else{
-            code = new tiramisu_code(code_id,
-                                     function_name + "_no_schedule",
-                                     &computations, &all_schedule_variables,
-                                     &variable_max_values, &inputs, &buffers,
-                                     default_type_tiramisu, &schedules_exhaustive[i]);
+        else fusions = generate_fusions(computations, smallest_computation->variables);
+
+        for (int k = 0; k < fusions.size() + 1; ++k) {
+            duplicated = schedules_exhaustive[i];
+            if (k != 0) {
+                duplicated.push_back(fusions[k - 1]);
+            }
+            else{
+                duplicated.push_back(new schedule(computations, THEN, {}, {}));
+            }
+
+            if (schedule_n != 0) {
+                code = new tiramisu_code(code_id,
+                                         function_name + "_schedule_" +
+                                         to_string(schedule_n - 1),
+                                         &computations, &all_schedule_variables,
+                                         &variable_max_values, &inputs, &buffers,
+                                         default_type_tiramisu, &duplicated);
+            } else {
+                code = new tiramisu_code(code_id,
+                                         function_name + "_no_schedule",
+                                         &computations, &all_schedule_variables,
+                                         &variable_max_values, &inputs, &buffers,
+                                         default_type_tiramisu, &duplicated);
+            }
+            generate_cpp_wrapper(code->function_name, buffers, default_type_wrapper, code_id);
+            generate_h_wrapper(code->function_name, buffers, code_id);
+            generate_json_schedules(schedule_classes[i], code_id, code->function_name);
+            schedule_n++;
         }
-        generate_cpp_wrapper(code->function_name, buffers, default_type_wrapper, code_id);
-        generate_h_wrapper(code->function_name, buffers, code_id);
-        generate_json_schedules(schedule_classes[i], code_id, code->function_name);
     }
 
 
@@ -337,8 +366,9 @@ node_class *comp_to_node(computation *comp, int seed) {
     assignments_class *assignments = new assignments_class(1, {assignment});
 
     vector<loop_class *> loops_array;
-    for (int i = 0; i < comp->variables.size(); ++i) {
-        loops_array.push_back(new loop_class(i, i - 1, 0, iterators_array[i]->id, new assignments_class(0, {})));
+    loops_array.push_back(new loop_class(seed, -1, 0, iterators_array[0]->id, new assignments_class(0, {})));
+    for (int i = 1; i < comp->variables.size(); ++i) {
+        loops_array.push_back(new loop_class(i + seed, i + seed - 1, 0, iterators_array[i]->id, new assignments_class(0, {})));
     }
     loops_array[comp->variables.size() - 1]->assignments = assignments;
 
@@ -349,6 +379,26 @@ node_class *comp_to_node(computation *comp, int seed) {
     node->code_type = comp->type;
 
     return node;
+}
+
+
+void update_node(node_class *node, schedule *s){
+    switch (s->type){
+        node_class *new_node;
+        loop_class *loop;
+        case AFTER:
+            for (int i = 1; i < s->comps.size(); ++i) {
+                new_node = comp_to_node(s->comps[i], s->comps[i]->id);
+                loop = new_node->loops->loops_array[s->factors[i + 1]];
+                loop->parent = node->loops->loops_array[s->factors[i]]->loop_id;
+                for (int j = s->factors[i + 1] + 1; j < new_node->loops->n; ++j) {
+                    node->loops->n++;
+                    loop = new_node->loops->loops_array[j];
+                    node->loops->loops_array.push_back(loop);
+                }
+            }
+            break;
+    }
 }
 
 
@@ -728,3 +778,85 @@ string to_base_2(int num, int nb_pos){
     }
     return num_to_base_2;
 }
+
+
+
+//Managing fusions
+
+
+//1st step : Take the smallest computation, find all the possible schedules for it (- unrolling), apply them to all other comps and generate fusions at all possible positions (always valid)
+
+//getting the smallest computation (the one which has the smallest number of iteration variables)
+computation *smallest_comp(vector<computation*> computations){
+    int min_size = computations[0]->variables.size(), pos_min_size = 0;
+    for (int i = 1; i < computations.size(); ++i) {
+        if (computations[i]->variables.size() < min_size){
+            pos_min_size = i;
+            min_size = computations[i]->variables.size();
+        }
+    }
+    return computations[pos_min_size];
+}
+
+//duplicates schedules of comp0 in all other computations
+vector<schedule*> duplicate_schedules(vector <schedule*> generated_schedules, computation* comp0, vector<computation*> other_comps){
+    vector <schedule*> new_schedules;
+    for (int i = 0; i < other_comps.size(); i++){
+        if (other_comps[i] != comp0) {
+            for (int j = 0; j < generated_schedules.size(); ++j) {
+                if ((generated_schedules[j]->comps[0] == comp0) && (generated_schedules[j]->type != UNROLL)) {
+                    new_schedules.push_back(new schedule({other_comps[i]}, generated_schedules[j]->type,
+                                                         generated_schedules[j]->factors,
+                                                         generated_schedules[j]->vars));
+                }
+            }
+        }
+    }
+    return new_schedules;
+}
+
+vector<schedule*> generate_fusions(vector<computation*> computations, vector<variable*> new_variables){
+    vector<schedule*> generated_fusions;
+    vector<variable*> variables;
+    for (int i = 0; i < new_variables.size(); ++i) {
+        variables.clear();
+        for (int j = 0; j < computations.size(); ++j) {
+            variables.push_back(new_variables[i]);
+        }
+        generated_fusions.push_back(new schedule(computations, AFTER, {}, variables));
+    }
+    return generated_fusions;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

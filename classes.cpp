@@ -187,7 +187,7 @@ void schedule::write(string *code_buffer) {
             if (comps.size() > 1) {
                 *code_buffer += comps[0]->name;
                 for (int i = 1; i < comps.size(); ++i) {
-                    *code_buffer += ".then(" + comps[i]->name + ", computation::rootroot)";
+                    *code_buffer += ".then(" + comps[i]->name + ", computation::root)";
                 }
                 *code_buffer += ";";
             }
@@ -205,7 +205,7 @@ void schedule::write(string *code_buffer) {
             if (comps.size() > 1) {
                 *code_buffer += comps[0]->name;
                 for (int i = 1; i < comps.size(); ++i) {
-                    *code_buffer += ".after(" + comps[i]->name + ", " + to_string(this->factors[i - 1]) + ")";
+                    *code_buffer += ".after(" + comps[i]->name + ", " + this->vars[i]->name + ")";
                 }
                 *code_buffer += ";";
             }
